@@ -46,8 +46,9 @@ app.get('/campgrounds', (req, res) => {
   Campground.find({}, (err, allCampgrounds) => {
     if (err) {
       console.log(error, 'ERROR');
+    } else {
+        res.render('index', {campgrounds: allCampgrounds})
     }
-    res.render('index', {campgrounds: allCampgrounds})
   });
 })
 
@@ -58,14 +59,13 @@ app.post('/campgrounds', (req, res) => {
   var description = req.body.description;
   var newCampground = {name: name, image: image, description: description};
   //Create a new campground and save to database
-  Campground.create(newCampground, (err, newlyCreated) => {
+  Campground.create(newCampground, (err, newCampground) => {
     if (err) {
       console.log(err)
     } else {
-      res.redirect('/campgrounds', {campgrounds: allCampgrounds});
+      res.redirect('/campgrounds');
     }
   })
-  res.redirect('/campgrounds')
 })
 
 // NEW - show form to create new campground
