@@ -3,84 +3,63 @@ var express  = require ('express'),
   bodyParser = require('body-parser'),
   mongoose   = require('mongoose')
 
-mongoose.connect('mongodb://localhost/yelp_camp', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost/sight_see', {useNewUrlParser: true});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 
 //SCHEMA SETUP
-var campgroundSchema = new mongoose.Schema({
+var sightSchema = new mongoose.Schema({
   name: String,
   image: String,
   description: String
 });
 
-var Campground = mongoose.model('Campground', campgroundSchema);
-
-// Campground.create(
-//   {
-//     name: 'Lake Rudolph',
-//     image: 'https://farm2.staticflickr.com/1363/1342367857_2fd12531e7.jpg',
-//     description: 'Lake Rudolph boasts a beautiful, large lake with tons of water activities for you to enjoy.'
-//   }, (err, campground) => {
-//     if (err) {
-//       console.log('ERROR', err)
-//     } else {
-//       console.log(campground, "CAMPGROUND!!!")
-//     }
-//   }
-// )
-
-// var campgrounds = [
-//   {name: 'Lakesdale', image: 'https://pixabay.com/get/e03db50f2bfc1c22d2524518b7444795ea76e5d004b0144497f3c679a2eeb7_340.jpg'},
-//   {name: 'Ventura Ranch', image: 'https://pixabay.com/get/ef3cb00b2af01c22d2524518b7444795ea76e5d004b0144497f3c479a3efb7_340.jpg'},
-//   {name: 'Jellystone Park', image: 'https://farm1.staticflickr.com/82/225912054_690e32830d.jpg'},
-//   {name: 'Lake Rudolph', image: 'https://farm2.staticflickr.com/1363/1342367857_2fd12531e7.jpg'},
-// ];
+var Sight = mongoose.model('Sight', sightSchema);
 
 app.get('/', (req, res) => {
   res.render('landing');
 })
 
 //INDEX - Get and show all campgrounds from DB
-app.get('/campgrounds', (req, res) => {
-  Campground.find({}, (err, allCampgrounds) => {
+app.get('/sights', (req, res) => {
+  Sight.find({}, (err, allSights) => {
     if (err) {
       console.log(error, 'ERROR');
     } else {
-        res.render('index', {campgrounds: allCampgrounds})
+        res.render('index', {sights: allSights})
     }
   });
 })
 
 //CREATE - add new campground to database
-app.post('/campgrounds', (req, res) => {
+app.post('/sights', (req, res) => {
   var name = req.body.name;
   var image = req.body.image;
   var description = req.body.description;
-  var newCampground = {name: name, image: image, description: description};
+  var newSight = {name: name, image: image, description: description};
   //Create a new campground and save to database
-  Campground.create(newCampground, (err, newCampground) => {
+  Sight.create(newSight, (err, newSight) => {
     if (err) {
       console.log(err)
     } else {
-      res.redirect('/campgrounds');
+      res.redirect('/sights');
     }
   })
 })
 
 // NEW - show form to create new campground
-app.get('/campgrounds/new', (req, res) => {
+app.get('/sights/new', (req, res) => {
   res.render('new');
 })
 
 //SHOW - shows info about one campground
-app.get('/campgrounds/:id', (req, res) => {
+app.get('/sights/:id', (req, res) => {
   // find campground with provided id
-  Campground.findById(req.params.id, (err, foundCampground) => {
+  Sight.findById(req.params.id, (err, foundSight) => {
     if (err) {
       console.log('ERROR', err)
     }
-    res.render('show', {campground: foundCampground});
+    res.render('show', {sight: foundSight});
   })
   // show template with that campground
 })
@@ -89,5 +68,5 @@ var port = 3000;
 var ip = '127.0.0.1';
 
 app.listen(port, ip, () => {
-  console.log('YelpCamp server has started')
+  console.log('SitesToSight server has started')
 })
