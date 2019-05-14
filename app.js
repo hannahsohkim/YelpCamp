@@ -1,20 +1,14 @@
-var express  = require ('express'),
-  app        = express(),
-  bodyParser = require('body-parser'),
-  mongoose   = require('mongoose')
+const express  = require ('express');
+const app = express();
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const Sight = require('./models/sight');
+const seed = require('./db/seeds');
 
 mongoose.connect('mongodb://localhost/sight_see', {useNewUrlParser: true});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
-
-//SCHEMA SETUP
-var sightSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String
-});
-
-var Sight = mongoose.model('Sight', sightSchema);
+seed();
 
 app.get('/', (req, res) => {
   res.render('landing');
