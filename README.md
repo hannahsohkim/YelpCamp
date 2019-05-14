@@ -1,7 +1,7 @@
-# YelpCamp
+# Sites to Sight
 
 ### Tech stack:  
-- Javascript (ejs)
+- Javascript
 - HTML, CSS, Bootstrap
 - MongoDB
 - Mongoose
@@ -9,4 +9,4 @@
 - Express
 
 ### Overview 
-YelpCamp is a simple CRUD web application with RESTful routing. A user can view all campgrounds, add a new campground, edit an existing campground, or delete a campground. There is also authentication which allows users to log in.
+Sites to Sight is a web application that hosts beautiful sites. The aim for the app is to discover new places you can visit, and beautiful sights to see. It follows a RESTful routing pattern that allows a user to view all sites, edit a site, add new sites, and delete a site. There is authentication which allows users to log in and manage this data.
